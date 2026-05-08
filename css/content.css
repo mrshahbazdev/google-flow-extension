@@ -1,0 +1,76 @@
+/* Flow Auto Generator - Content Script Overlay Styles */
+
+#flow-auto-gen-overlay {
+  position: fixed;
+  top: 16px;
+  right: 16px;
+  z-index: 99999;
+  background: rgba(26, 26, 46, 0.95);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(124, 58, 237, 0.3);
+  border-radius: 12px;
+  padding: 12px 16px;
+  color: #e6e6e6;
+  font-family: 'Segoe UI', system-ui, sans-serif;
+  font-size: 13px;
+  min-width: 240px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+  transition: all 0.3s ease;
+}
+
+#flow-auto-gen-overlay.minimized {
+  min-width: auto;
+  padding: 8px 12px;
+  cursor: pointer;
+}
+
+#flow-auto-gen-overlay .fag-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+#flow-auto-gen-overlay .fag-title {
+  font-size: 12px;
+  font-weight: 600;
+  color: #a855f7;
+}
+
+#flow-auto-gen-overlay .fag-minimize {
+  background: none;
+  border: none;
+  color: #6b6b80;
+  cursor: pointer;
+  font-size: 14px;
+  padding: 2px;
+}
+
+#flow-auto-gen-overlay .fag-status {
+  font-size: 11px;
+  color: #a0a0b8;
+  margin-bottom: 6px;
+}
+
+#flow-auto-gen-overlay .fag-progress {
+  height: 4px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+#flow-auto-gen-overlay .fag-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #7c3aed, #a855f7);
+  border-radius: 4px;
+  transition: width 0.5s ease;
+}
+
+#flow-auto-gen-overlay .fag-current-prompt {
+  font-size: 11px;
+  color: #6b6b80;
+  margin-top: 6px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

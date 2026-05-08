@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Flow Auto Generator</title>
+  <link rel="stylesheet" href="css/popup.css">
+</head>
+<body>
+  <div class="app">
+    <!-- Header -->
+    <div class="header">
+      <div class="logo">
+        <span class="logo-icon">🎨</span>
+        <span class="logo-text">Flow Auto Generator</span>
+      </div>
+      <div class="status-dot" id="statusDot" title="Not connected"></div>
+    </div>
+
+    <!-- Tab Navigation -->
+    <div class="tabs">
+      <button class="tab active" data-tab="generator">Generator</button>
+      <button class="tab" data-tab="templates">Templates</button>
+      <button class="tab" data-tab="history">History</button>
+      <button class="tab" data-tab="settings">Settings</button>
+    </div>
+
+    <!-- Generator Tab -->
+    <div class="tab-content active" id="tab-generator">
+      <!-- Single Prompt Mode -->
+      <div class="section">
+        <label class="label">Prompt</label>
+        <textarea id="promptInput" class="textarea" rows="3" placeholder="Describe the image you want to create..."></textarea>
+      </div>
+
+      <!-- Bulk Prompt Mode -->
+      <div class="section">
+        <div class="section-header">
+          <label class="label">Bulk Prompts</label>
+          <label class="toggle-label">
+            <input type="checkbox" id="bulkMode" class="toggle-input">
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+        <div id="bulkSection" class="hidden">
+          <textarea id="bulkPrompts" class="textarea" rows="5" placeholder="Enter one prompt per line...&#10;A majestic lion in the savanna&#10;Cyberpunk city at night&#10;Underwater coral reef"></textarea>
+          <div class="prompt-count">
+            <span id="promptCount">0</span> prompts loaded
+          </div>
+        </div>
+      </div>
+
+      <!-- Image Settings -->
+      <div class="section">
+        <label class="label">Images per Prompt</label>
+        <div class="radio-group">
+          <label class="radio-option">
+            <input type="radio" name="imageCount" value="1"> x1
+          </label>
+          <label class="radio-option">
+            <input type="radio" name="imageCount" value="2" checked> x2
+          </label>
+          <label class="radio-option">
+            <input type="radio" name="imageCount" value="3"> x3
+          </label>
+          <label class="radio-option">
+            <input type="radio" name="imageCount" value="4"> x4
+          </label>
+        </div>
+      </div>
+
+      <!-- Auto-Download -->
+      <div class="section">
+        <div class="section-header">
+          <label class="label">Auto-Download Images</label>
+          <label class="toggle-label">
+            <input type="checkbox" id="autoDownload" class="toggle-input">
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+      </div>
+
+      <!-- Delay Settings -->
+      <div class="section">
+        <label class="label">Delay Between Generations (seconds)</label>
+        <input type="range" id="delaySlider" min="5" max="60" value="15" class="slider">
+        <div class="slider-value"><span id="delayValue">15</span>s</div>
+      </div>
+
+      <!-- Progress -->
+      <div id="progressSection" class="section hidden">
+        <div class="progress-bar">
+          <div class="progress-fill" id="progressFill"></div>
+        </div>
+        <div class="progress-text" id="progressText">Processing 0/0</div>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="actions">
+        <button id="generateBtn" class="btn btn-primary">
+          <span class="btn-icon">⚡</span> Generate
+        </button>
+        <button id="stopBtn" class="btn btn-danger hidden">
+          <span class="btn-icon">⏹</span> Stop
+        </button>
+      </div>
+    </div>
+
+    <!-- Templates Tab -->
+    <div class="tab-content" id="tab-templates">
+      <div class="section">
+        <label class="label">Quick Templates</label>
+        <div class="template-grid" id="templateGrid">
+          <!-- Templates will be loaded dynamically -->
+        </div>
+      </div>
+      <div class="section">
+        <label class="label">Custom Template</label>
+        <div class="custom-template">
+          <input type="text" id="templateName" class="input" placeholder="Template name">
+          <textarea id="templatePrompt" class="textarea" rows="2" placeholder="Template prompt text..."></textarea>
+          <button id="saveTemplate" class="btn btn-secondary">Save Template</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- History Tab -->
+    <div class="tab-content" id="tab-history">
+      <div class="section">
+        <div class="section-header">
+          <label class="label">Recent Prompts</label>
+          <button id="clearHistory" class="btn-link">Clear All</button>
+        </div>
+        <div id="historyList" class="history-list">
+          <div class="empty-state">No history yet</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Settings Tab -->
+    <div class="tab-content" id="tab-settings">
+      <div class="section">
+        <label class="label">Default Model</label>
+        <select id="defaultModel" class="select">
+          <option value="nano-banana-2">Nano Banana 2</option>
+          <option value="nano-banana-pro">Nano Banana Pro</option>
+        </select>
+      </div>
+      <div class="section">
+        <label class="label">Default Aspect Ratio</label>
+        <select id="defaultAspect" class="select">
+          <option value="16:9">16:9 (Landscape)</option>
+          <option value="9:16">9:16 (Portrait)</option>
+          <option value="1:1">1:1 (Square)</option>
+          <option value="4:3">4:3 (Standard)</option>
+          <option value="3:4">3:4 (Portrait Standard)</option>
+        </select>
+      </div>
+      <div class="section">
+        <div class="section-header">
+          <label class="label">Notifications</label>
+          <label class="toggle-label">
+            <input type="checkbox" id="notifications" class="toggle-input" checked>
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+        <p class="hint">Get notified when generation completes</p>
+      </div>
+      <div class="section">
+        <label class="label">About</label>
+        <p class="hint">Flow Auto Generator v1.0.0</p>
+        <p class="hint">Automate image generation on Google Flow</p>
+      </div>
+    </div>
+  </div>
+  <script src="js/popup.js"></script>
+</body>
+</html>
